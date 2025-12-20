@@ -1,0 +1,54 @@
+[
+  {
+    "type": "group",
+    "name": "Navigation",
+    "color": "#10b981",
+    "apps": [
+      {
+        "name": "Vivaldi",
+        "path": "Vivaldi"
+      },
+      {
+        "name": "Vivaldi",
+        "path": "Vivaldi"
+      },
+      {
+        "name": "Vivaldi",
+        "path": "Vivaldi"
+      }
+    ]
+  },
+  {
+    "type": "group",
+    "name": "Développement",
+    "color": "#3b82f6",
+    "apps": [
+      {
+        "name": "VS Code",
+        "path": "Code.exe"
+      }
+    ]
+  },
+  {
+    "type": "group",
+    "name": "Communication",
+    "color": "#8b5cf6",
+    "apps": [
+      {
+        "name": "Teams",
+        "path": "ms-teams"
+      }
+    ]
+  },
+  {
+    "type": "group",
+    "name": "Média",
+    "color": "#ec4899",
+    "apps": [
+      {
+        "name": "Deezer",
+        "path": "Deezer.exe"
+      }
+    ]
+  }
+]
