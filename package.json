@@ -1,16 +1,39 @@
 {
-  "name": "deck",
+  "name": "virtual-stream-deck",
   "version": "1.0.0",
-  "main": "server.js",
+  "main": "main.cjs",
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node server.js",
+    "electron": "electron .",
+    "build": "electron-builder",
+    "build:win": "electron-builder --win",
+    "pack": "electron-builder --dir"
   },
   "author": "",
   "license": "ISC",
-  "description": "",
+  "description": "Virtual Stream Deck Web - Interface web pour lancer vos applications",
+  "build": {
+    "appId": "com.l0git3k.deck",
+    "productName": "Virtual Stream Deck",
+    "win": {
+      "target": ["nsis"],
+      "icon": "public/icons/main.png"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "runAfterFinish": true
+    }
+  },
   "dependencies": {
     "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "electron": "^39.2.7",
+    "electron-builder": "^26.0.12"
   }
 }
