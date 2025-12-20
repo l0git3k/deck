@@ -127,11 +127,11 @@ Voir [ARCHITECTURE.md](ARCHITECTURE.md) pour plus de détails.
 
 ```json
 {
-  "color": "#3b82f6"  // Bleu
-  "color": "#10b981"  // Vert
-  "color": "#8b5cf6"  // Violet
-  "color": "#ec4899"  // Rose
-  "color": "#f59e0b"  // Orange
+  "color": "#3b82f6"
+  "color": "#10b981"
+  "color": "#8b5cf6"
+  "color": "#ec4899"
+  "color": "#f59e0b"
 }
 ```
 
@@ -218,7 +218,3 @@ Ce projet est sous licence MIT. Voir le fichier `LICENSE` pour plus de détails.
 ## 📞 Contact
 
 GitHub: [@l0git3k](https://github.com/l0git3k)
-
----
-
-⭐ N'oubliez pas de mettre une étoile si ce projet vous est utile !
