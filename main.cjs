@@ -60,9 +60,19 @@ function createTray() {
 
 function startServer() {
   return new Promise((resolve, reject) => {
-    serverProcess = spawn('node', ['server.js'], {
-      cwd: __dirname,
-      stdio: 'pipe'
+    const serverPath = app.isPackaged 
+      ? path.join(process.resourcesPath, 'app.asar', 'server.js')
+      : path.join(__dirname, 'server.js');
+    
+    // Utiliser 'node' directement du PATH système
+    const nodeCommand = app.isPackaged 
+      ? process.execPath.replace('electron.exe', 'node.exe')
+      : 'node';
+    
+    serverProcess = spawn(nodeCommand, [serverPath], {
+      cwd: app.isPackaged ? process.resourcesPath : __dirname,
+      stdio: 'pipe',
+      shell: true // Permet de trouver node dans le PATH
     });
 
     serverProcess.stdout.on('data', (data) => {
@@ -88,6 +98,9 @@ function startServer() {
 
 app.whenReady().then(async () => {
   console.log('🚀 Démarrage de Stream Deck...');
+  
+  // Désactiver l'accélération GPU pour éviter les erreurs de cache
+  app.disableHardwareAcceleration();
   
   // Démarrer le serveur Node.js
   await startServer();

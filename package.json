@@ -19,7 +19,8 @@
     "productName": "Virtual Stream Deck",
     "win": {
       "target": ["nsis"],
-      "icon": "public/icons/main.png"
+      "icon": "build/icon.ico",
+      "signAndEditExecutable": false
     },
     "nsis": {
       "oneClick": false,

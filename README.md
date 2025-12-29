@@ -93,6 +93,7 @@ Le système trouve automatiquement vos applications via :
 ### Exemples de chemins
 
 Vous pouvez utiliser :
+
 - `Code.exe` ou `code` pour VS Code
 - `chrome` pour Google Chrome
 - `ms-teams` pour Microsoft Teams
@@ -138,6 +139,7 @@ Voir [ARCHITECTURE.md](ARCHITECTURE.md) pour plus de détails.
 ### Styles CSS
 
 Éditez `public/css/styles.css` pour personnaliser :
+
 - Taille des boutons
 - Couleurs
 - Animations
@@ -184,6 +186,7 @@ curl -X POST http://localhost:3000/run \
 ### Port déjà utilisé
 
 Modifiez le port dans `server.js` :
+
 ```javascript
 const PORT = process.env.PORT || 3001;
 ```

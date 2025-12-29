@@ -7,8 +7,20 @@
   <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
-  <div class="deck-container" id="deckContainer">
-    <!-- Les boutons seront générés dynamiquement -->
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <h2>🪟 Fenêtres ouvertes</h2>
+      <button id="refreshWindows" class="refresh-button" title="Actualiser">🔄</button>
+    </div>
+    <div id="windowsList" class="windows-list">
+      <!-- Les fenêtres ouvertes seront listées ici -->
+    </div>
+  </div>
+  
+  <div class="main-content">
+    <div class="deck-container" id="deckContainer">
+      <!-- Les boutons seront générés dynamiquement -->
+    </div>
   </div>
   
   <script src="/js/app.js"></script>

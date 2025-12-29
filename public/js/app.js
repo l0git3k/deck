@@ -144,4 +144,170 @@ async function loadDeck() {
 }
 
 // Initialisation au chargement de la page
-document.addEventListener('DOMContentLoaded', loadDeck);
+document.addEventListener('DOMContentLoaded', () => {
+  loadDeck();
+  loadOpenWindows();
+  
+  // Actualiser les fenêtres toutes les 3 secondes
+  setInterval(loadOpenWindows, 3000);
+  
+  // Bouton de rafraîchissement manuel
+  const refreshButton = document.getElementById('refreshWindows');
+  if (refreshButton) {
+    refreshButton.addEventListener('click', loadOpenWindows);
+  }
+});
+
+// ============================================
+// Gestion des fenêtres ouvertes
+// ============================================
+
+// Charge et affiche les fenêtres ouvertes
+async function loadOpenWindows() {
+  try {
+    const response = await fetch('/windows/grouped');
+    
+    if (!response.ok) {
+      throw new Error('Impossible de charger les fenêtres ouvertes');
+    }
+    
+    const data = await response.json();
+    const windowsList = document.getElementById('windowsList');
+    
+    if (!windowsList) return;
+    
+    // Vider la liste
+    windowsList.innerHTML = '';
+    
+    if (data.applications && data.applications.length > 0) {
+      data.applications.forEach(app => {
+        const windowItem = createWindowItem(app);
+        windowsList.appendChild(windowItem);
+      });
+    } else {
+      windowsList.innerHTML = '<div style="padding: 16px; color: rgba(255,255,255,0.4); text-align: center; font-size: 12px;">Aucune fenêtre ouverte</div>';
+    }
+  } catch (error) {
+    console.error('✗ Erreur lors du chargement des fenêtres:', error);
+  }
+}
+
+// Crée un élément de fenêtre dans la liste
+function createWindowItem(app) {
+  const item = document.createElement('div');
+  item.className = 'window-item';
+  
+  // Icône (emoji par défaut, peut être remplacé par l'icône du processus)
+  const icon = document.createElement('div');
+  icon.className = 'window-icon';
+  icon.textContent = getProcessIcon(app.processName);
+  
+  // Info
+  const info = document.createElement('div');
+  info.className = 'window-info';
+  
+  const title = document.createElement('div');
+  title.className = 'window-title';
+  title.textContent = app.windows[0]?.title || app.processName;
+  title.title = app.windows[0]?.title || app.processName; // Tooltip
+  
+  const process = document.createElement('div');
+  process.className = 'window-process';
+  process.textContent = app.processName;
+  
+  info.appendChild(title);
+  info.appendChild(process);
+  
+  item.appendChild(icon);
+  item.appendChild(info);
+  
+  // Badge du nombre de fenêtres si > 1
+  if (app.windowCount > 1) {
+    const badge = document.createElement('div');
+    badge.className = 'window-count';
+    badge.textContent = app.windowCount;
+    item.appendChild(badge);
+  }
+  
+  // Click handler pour activer la fenêtre
+  item.addEventListener('click', () => {
+    if (app.windows && app.windows.length > 0) {
+      focusWindow(app.windows[0].windowHandle);
+    }
+  });
+  
+  return item;
+}
+
+// Active/focus une fenêtre
+async function focusWindow(windowHandle) {
+  try {
+    const response = await fetch('/windows/focus', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ windowHandle })
+    });
+    
+    if (response.ok) {
+      console.log('✓ Fenêtre activée');
+    } else {
+      console.error('✗ Erreur lors de l\'activation de la fenêtre');
+    }
+  } catch (error) {
+    console.error('✗ Erreur:', error);
+  }
+}
+
+// Retourne un emoji approprié pour le processus
+function getProcessIcon(processName) {
+  const icons = {
+    'chrome': '🌐',
+    'firefox': '🦊',
+    'edge': '🌐',
+    'msedge': '🌐',
+    'brave': '🦁',
+    'code': '📝',
+    'vscode': '📝',
+    'notepad': '📝',
+    'notepad++': '📝',
+    'explorer': '📁',
+    'cmd': '⌨️',
+    'powershell': '⚡',
+    'terminal': '⌨️',
+    'discord': '💬',
+    'slack': '💬',
+    'teams': '👥',
+    'zoom': '📹',
+    'spotify': '🎵',
+    'vlc': '▶️',
+    'excel': '📊',
+    'word': '📄',
+    'powerpoint': '📊',
+    'outlook': '📧',
+    'steam': '🎮',
+    'epic': '🎮',
+    'calculator': '🔢',
+    'paint': '🎨',
+    'obs64': '🎥',
+    'obs': '🎥',
+    'photoshop': '🖼️',
+    'illustrator': '✏️',
+    'gimp': '🖼️'
+  };
+  
+  const lowerName = processName.toLowerCase();
+  for (const [key, icon] of Object.entries(icons)) {
+    if (lowerName.includes(key)) {
+      return icon;
+    }
+  }
+  
+  return '📱'; // Icône par défaut
+}
+
+// ============================================
+// Gestion du Stream Deck (code existant)
+// ============================================
+

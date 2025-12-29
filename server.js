@@ -4,6 +4,7 @@ import { fileURLToPath } from "url";
 import configRoutes from "./routes/config.js";
 import appsRoutes from "./routes/apps.js";
 import runRoutes from "./routes/run.js";
+import windowsRoutes from "./routes/windows.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -18,6 +19,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(configRoutes);
 app.use(appsRoutes);
 app.use(runRoutes);
+app.use(windowsRoutes);
 
 // Gestion des erreurs 404
 app.use((req, res) => {
